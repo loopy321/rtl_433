@@ -1,5 +1,5 @@
 /** @file
-    Chuango Security Technology.
+    
 
     Copyright (C) 2015 Tommy Vestermark
 
@@ -10,22 +10,9 @@
 
 */
 /**
-Chuango Security Technology.
+Based on chuango.c
 
-Likely based on HS1527 or compatible
-
-Tested devices:
-- G5 GSM/SMS/RFID Touch Alarm System (Alarm, Disarm, ...)
-- DWC-100 Door sensor (Default: Normal Zone)
-- DWC-102 Door sensor (Default: Normal Zone)
-- KP-700 Wireless Keypad (Arm, Disarm, Home Mode, Alarm!)
-- PIR-900 PIR sensor (Default: Home Mode Zone)
-- RC-80 Remote Control (Arm, Disarm, Home Mode, Alarm!)
-- SMK-500 Smoke sensor (Default: 24H Zone)
-- WI-200 Water sensor (Default: 24H Zone)
-- newer DWC-102 additionally generates a cmd=12 signal on door/windows being closed
-
-Note: simple 24 bit fixed ID protocol (x1527 style) and should be handled by the flex decoder.
+It is a reed switch door sensor two pack https://www.amazon.com/dp/B0FHBQF2HM
 
 */
 
@@ -55,6 +42,8 @@ static int door_generic_callback(r_device *decoder, bitbuffer_t *bitbuffer)
     id  = (b[0] << 12) | (b[1] << 4) | (b[2] >> 4); // ID is 20 bits (Ad: "1 Million combinations" :-)
     cmd = b[2] & 0x0F;
 
+
+    //only one used are 9/6 
     switch (cmd) {
     case 0xF: cmd_str = "?"; break;
     case 0xE: cmd_str = "?"; break;
@@ -100,9 +89,9 @@ static char const *const output_fields[] = {
 r_device const door_generic = {
         .name        = "Door Sensor Generic 433",
         .modulation  = OOK_PULSE_PWM,
-        .short_width = 432,  // Pulse: Short 568µs, Long 1704µs
-        .long_width  = 1152, // Gaps:  Short 568µs, Long 1696µs
-        .reset_limit = 1160, // Intermessage Gap 17200µs (individually for now)
+        .short_width = 432,  // 
+        .long_width  = 1152, // 
+        .reset_limit = 1160, // 
         .sync_width  = 0,    // No sync bit used
         .tolerance   = 288,  // us
         .decode_fn   = &door_generic_callback,
