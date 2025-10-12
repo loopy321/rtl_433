@@ -8,6 +8,7 @@
 #include "r_device.h"
 
 #define DEVICES \
+    DECL(door_generic) \
     DECL(silvercrest) \
     DECL(rubicson) \
     DECL(prologue) \
